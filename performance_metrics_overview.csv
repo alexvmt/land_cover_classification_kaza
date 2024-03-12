@@ -1,0 +1,9 @@
+model,features,set,sample size,accuracy,precision,recall,f1
+rf default,raw bands only,train,3305,1,1,1,1
+rf default,raw bands only,test,78321,0.8488,0.7012,0.8432,0.7276
+rf optimized,raw bands only,train,3305,1,1,1,1
+rf optimized,raw bands only,test,78321,0.8515,0.7075,0.8533,0.7372
+rf default,raw bands and 4 indices,train,3305,1,1,1,1
+rf default,raw bands and 4 indices,test,78321,0.8467,0.6869,0.8296,0.7143
+rf optimized,raw bands and 4 indices,train,3305,1,1,1,1
+rf optimized,raw bands and 4 indices,test,78321,0.8504,0.6933,0.8495,0.7256
