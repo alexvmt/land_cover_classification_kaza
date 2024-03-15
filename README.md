@@ -18,7 +18,9 @@ Upload to Google Drive and use with Google Colab.
 
 1. Get raw data using `raw_data.js` in Google Earth Engine Code Editor
 2. Create train and test set using `train_and_test_set.ipynb` in Google Colab
+
 *3. Optional: Run optimization using `optimization.ipynb` in Google Colab*
+
 4. Train final model using `final_model.ipynb` in Google Colab
 5. Create land cover map using `land_cover_map.ipynb` in Google Colab
 6. Inspect created land cover map using `classified_image.js` in Google Earth Engine Code Editor
