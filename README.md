@@ -36,13 +36,13 @@ Upload to Google Drive and use with Google Colab.
 | rf optimized | raw bands and 4 indices           | train | 3305        | 1        | 1         | 1      | 1      |
 | rf optimized | raw bands and 4 indices           | test  | 78321       | 0.8504   | 0.6933    | 0.8495 | 0.7256 |
 | rf default   | quarterly raw bands               | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands               | test  | 78321       | 0.885    | 0.7108    | 0.8901 | 0.7558 |
-| rf optimized | quarterly raw bands               | train | 3305        |          |           |        |        |
-| rf optimized | quarterly raw bands               | test  | 78321       |          |           |        |        |
+| rf default   | quarterly raw bands               | test  | 78321       | 0.8880   | 0.7060    | 0.8964 | 0.7540 |
+| rf optimized | quarterly raw bands               | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | quarterly raw bands               | test  | 78321       | 0.8942   | 0.7145    | 0.9053 | 0.7647 |
 | rf default   | quarterly raw bands and 4 indices | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands and 4 indices | test  | 78321       | 0.89     | 0.7184    | 0.8952 | 0.7608 |
-| rf optimized | quarterly raw bands and 4 indices | train | 3305        |          |           |        |        |
-| rf optimized | quarterly raw bands and 4 indices | test  | 78321       |          |           |        |        |
+| rf default   | quarterly raw bands and 4 indices | test  | 78321       | 0.8895   | 0.7270    | 0.8910 | 0.7598 |
+| rf optimized | quarterly raw bands and 4 indices | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | quarterly raw bands and 4 indices | test  | 78321       | 0.8979   | 0.7383    | 0.9031 | 0.7793 |
 
 ### Example land cover map
 
