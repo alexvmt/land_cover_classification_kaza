@@ -25,24 +25,32 @@ Upload to Google Drive and use with Google Colab.
 
 ### Modeling experiments
 
-| model        | features                          | set   | sample size | accuracy | precision | recall | f1     |
-|--------------|-----------------------------------|-------|-------------|----------|-----------|--------|--------|
-| rf default   | raw bands only                    | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | raw bands only                    | test  | 78321       | 0.8488   | 0.7012    | 0.8432 | 0.7276 |
-| rf optimized | raw bands only                    | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | raw bands only                    | test  | 78321       | 0.8515   | 0.7075    | 0.8533 | 0.7372 |
-| rf default   | raw bands and 4 indices           | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | raw bands and 4 indices           | test  | 78321       | 0.8467   | 0.6869    | 0.8296 | 0.7143 |
-| rf optimized | raw bands and 4 indices           | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | raw bands and 4 indices           | test  | 78321       | 0.8504   | 0.6933    | 0.8495 | 0.7256 |
-| rf default   | quarterly raw bands               | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands               | test  | 78321       | 0.8880   | 0.7060    | 0.8964 | 0.7540 |
-| rf optimized | quarterly raw bands               | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | quarterly raw bands               | test  | 78321       | 0.8942   | 0.7145    | 0.9053 | 0.7647 |
-| rf default   | quarterly raw bands and 4 indices | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands and 4 indices | test  | 78321       | 0.8895   | 0.7270    | 0.8910 | 0.7598 |
-| rf optimized | quarterly raw bands and 4 indices | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | quarterly raw bands and 4 indices | test  | 78321       | 0.8979   | 0.7383    | 0.9031 | 0.7793 |
+| model        | features                        | set   | sample size | accuracy | precision | recall | f1     |
+|--------------|---------------------------------|-------|-------------|----------|-----------|--------|--------|
+| rf default   | raw bands only                  | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | raw bands only                  | test  | 78321       | 0.8488   | 0.7012    | 0.8432 | 0.7276 |
+| rf optimized | raw bands only                  | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | raw bands only                  | test  | 78321       | 0.8515   | 0.7075    | 0.8533 | 0.7372 |
+| rf default   | raw bands and indices           | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | raw bands and indices           | test  | 78321       | 0.8467   | 0.6869    | 0.8296 | 0.7143 |
+| rf optimized | raw bands and indices           | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | raw bands and indices           | test  | 78321       | 0.8504   | 0.6933    | 0.8495 | 0.7256 |
+| rf default   | seasonal raw bands              | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | seasonal raw bands              | test  | 78321       | 0.888    | 0.706     | 0.8964 | 0.754  |
+| rf optimized | seasonal raw bands              | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | seasonal raw bands              | test  | 78321       | 0.8942   | 0.7145    | 0.9053 | 0.7647 |
+| rf default   | seasonal raw bands and indices  | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | seasonal raw bands and indices  | test  | 78321       | 0.8895   | 0.727     | 0.891  | 0.7598 |
+| rf optimized | seasonal raw bands and indices  | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | seasonal raw bands and indices  | test  | 78321       | 0.8979   | 0.7383    | 0.9031 | 0.7793 |
+| rf default   | quarterly raw bands             | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | quarterly raw bands             | test  | 78321       | 0.9295   | 0.7882    | 0.9352 | 0.8295 |
+| rf optimized | quarterly raw bands             | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | quarterly raw bands             | test  | 78321       | 0.9356   | 0.8189    | 0.9398 | 0.8565 |
+| rf default   | quarterly raw bands and indices | train | 3305        | 1        | 1         | 1      | 1      |
+| rf default   | quarterly raw bands and indices | test  | 78321       | 0.9303   | 0.772     | 0.9322 | 0.82   |
+| rf optimized | quarterly raw bands and indices | train | 3305        | 1        | 1         | 1      | 1      |
+| rf optimized | quarterly raw bands and indices | test  | 78321       | 0.9355   | 0.81      | 0.9429 | 0.8527 |
 
 ### Example land cover map
 
