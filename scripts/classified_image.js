@@ -62,10 +62,10 @@ var legendTitle = ui.Label({
 
 // Add the title to the panel
 legend.add(legendTitle);
-    
+
 // Creates and styles 1 row of the legend.
 var makeRow = function(color, name) {
-      
+
       // Create the label that is actually the colored box.
       var colorBox = ui.Label({
         style: {
@@ -75,13 +75,13 @@ var makeRow = function(color, name) {
           margin: '0 0 4px 0'
         }
       });
-      
+
       // Create the label filled with the description text.
       var description = ui.Label({
         value: name,
         style: {margin: '0 0 4px 6px'}
       });
-      
+
       // return the panel
       return ui.Panel({
         widgets: [colorBox, description],
@@ -95,7 +95,7 @@ var names = ['Water', 'Bare', 'Built up', 'Cropland', 'Grass', 'Shrub', 'Forest'
 // Add color and and names
 for (var i = 1; i < 8; i++) {
   legend.add(makeRow(palette[i], names[i]));
-  }  
+  }
 
-// add legend to map (alternatively you can also print the legend to the console)  
+// add legend to map (alternatively you can also print the legend to the console)
 Map.add(legend);

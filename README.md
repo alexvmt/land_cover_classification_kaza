@@ -2,7 +2,7 @@
 
 Monitoring the distribution and evolution of land cover for conservation is challenging and important,
 for instance in the context of human-wildlife conflict or sustainable agricultural practices.
-Publically available satellite imagery (e. g. Sentinel-2) and machine learning techniques (e. g. random forest) can be used 
+Publically available satellite imagery (e. g. Sentinel-2) and machine learning techniques (e. g. random forest) can be used
 to create accurate annual land cover maps that consitute the basis for further analysis
 and decision support for impact monitoring efforts on the ground.
 
@@ -46,7 +46,7 @@ Upload the repository to Google Drive and use the notebooks with Colab.
 See below a section from an examplary land cover map for 2023 (Binga, Zimbabwe),
 created using a random forest with default hyperparameters and quarterly raw bands as features.
 
-![example land cover map](example_land_cover_map.png 'example land cover map')
+![example land cover map](media/example_land_cover_map.png 'example land cover map')
 
 ## Modeling experiments
 
@@ -110,7 +110,7 @@ In some case there is also significant confusion between classes.
 Below is a comparison of feature importances for the default and the optimized random forest, using quarterly data and raw bands only as features.
 The notebook `final_model.ipynb` also contains permutation importances for the train and test set.
 
-![compared feature importances](compared_feature_importances.png 'compared feature importances')
+![compared feature importances](media/compared_feature_importances.png 'compared feature importances')
 
 ## Summary and open questions
 
