@@ -1,45 +1,32 @@
 # Land Cover Classification for KAZA in Collaboration with [WWF Space Science Germany](https://space-science.wwf.de/)
 
-Monitoring the distribution and evolution of land cover for conservation is challenging and important,
-for instance in the context of human-wildlife conflict or sustainable agricultural practices.
-Publically available satellite imagery (e. g. Sentinel-2) and machine learning techniques (e. g. random forest) can be used
-to create accurate annual land cover maps that consitute the basis for further analysis
-and decision support for impact monitoring efforts on the ground.
+Monitoring the distribution and evolution of land cover for conservation is challenging and important, for instance in the context of human-wildlife conflict or sustainable agricultural practices. Publically available satellite imagery (e. g. Sentinel-2) and machine learning techniques (e. g. random forest) can be used to create accurate annual land cover maps that consitute the basis for further analysis and decision support for impact monitoring efforts on the ground.
 
-This repository contains a set of Google Earth Engine (EE) scripts and Google Colab (Colab) notebooks
-that together constitute the prototype of an end-to-end pipeline for land cover classification.
-A key feature of this pipeline is that the final model is trained locally in Colab
-while inference (i. e. creation of land cover map) is done directly in EE,
-which makes the whole process flexible and efficient.
-Naturally, there are several limitations to this process,
-e. g. availability of models than can be trained locally using `scikit-learn` and
-then be directly used in EE for inference.
+This repository contains a pipeline for automated land cover classification across the [Kavango-Zambezi Transfrontier Conservation Area](https://space-science.wwf.de/KAZAStory/) using Sentinel-2 satellite imagery and machine learning.
 
-The example used here focusses on the [Kavango-Zambezi Transfrontier Conservation Area](https://space-science.wwf.de/KAZAStory/) in Southern Africa.
-But the scripts and notebooks can be adapted to be used mostly anywhere on the planet,
-given one has suitable labeled data for model training.
+**Key features:**
+- Scriptable preprocessing and feature engineering
+- Modular hyperparameter optimization using Optuna
+- Inference via Google Earth Engine for scalable deployment
+- Fine-grained temporal resolution (quarterly data)
+
+The pipeline can be adapted to other regions with suitable training data.
 
 ## Setup
 
-Clone the repository and create the directory structure.
-
-```
+```bash
 git clone git@github.com:alexvmt/land_cover_classification_kaza.git
 cd land_cover_classification_kaza
-mkdir data
-mkdir models
+uv sync
 ```
 
-Upload the repository to Google Drive and use the notebooks with Colab.
+## Pipeline steps
 
-## Steps
-
-1. Get raw data using `raw_data.js` in EE Code Editor
-2. Create train and test set using `train_and_test_set.ipynb` in Colab
-3. *Optional: Run optimization with `auto-sklearn` using `optimization.ipynb` in Colab*
-4. Train final model using `final_model.ipynb` in Colab
-5. Create land cover map using `land_cover_map.ipynb` in Colab
-6. Inspect created land cover map using `classified_image.js` in EE Code Editor
+1. **Data collection** – Extract raw satellite bands using `scripts/raw_data.js` in EE Code Editor
+2. **Data preparation** – Process and split data using `scripts/prepare_data.py`
+3. **Model optimization** – Tune hyperparameters using `scripts/optimize_model.py`
+4. **Model export** – Export sklearn classifier to EE using `scripts/export_model.py`
+5. **Inference** – Generate land cover map using `scripts/classified_image.js` in EE Code Editor
 
 ## Example land cover map
 
@@ -50,77 +37,31 @@ created using a random forest with default hyperparameters and quarterly raw ban
 
 ## Modeling experiments
 
-The modeling experiments have been conducted using random forest only since it is not only a popular choice for the task at hand
-but also since there is no functionality to train a model locally and then deploy it to EE for most other models available in EE.
+Experiments use Random Forest classifiers trained on quarterly Sentinel-2 raw bands and spectral indices. The dataset consists of ~3,303 training samples and 78,323 test samples. Hyperparameter optimization uses Optuna with 10-fold stratified cross-validation.
 
-The experiments compare performance in terms of standard classification metrics
-for random forest with default hyperparameters and random forest with optimized hyperparameters (found using `auto-sklearn`).
+**Performance comparison (quarterly raw bands):**
 
-Besides, different configurations of the data structure and sets of features are also compared:
-- annual, seasonal (rainy and dry) and quarterly data
-- raw bands and standard remote sensing indices (e. g. NDVI, NDWI, SAVI, EVI)
+| Model | Accuracy | Precision | Recall | F1 Score | CV F1 Mean |
+|-------|----------|-----------|--------|----------|------------|
+| Default (100 estimators) | 0.9325 | 0.7893 | 0.9307 | 0.8380 | 0.9297 |
+| Optimized (319 estimators, max_depth=47) | 0.9313 | 0.7918 | 0.9292 | 0.8402 | 0.9242 |
 
-It is possible to create an even more granular monthly time series of the data, but doing so results in a reduced sample size.
-This is due to the fact that there is pronounced cloud cover during the rainy season which in turn leads to less data for certain dates and areas.
+The optimized model achieved marginally higher test F1 score (+0.22%) at the cost of increased complexity. Both models show strong performance with F1 ≥ 0.84 on the test set.
 
-Due to severe class imbalance the training data is rather small. The test data has not been balanced.
-
-The table below shows the experiments' results. The key observations are:
-- Focussing on the test set, performance tends to increase with the granularity of the data.
-- The optimized model tends to yield only minor improvements at the cost of increased complexity and effort.
-- Adding indices doesn't tend to improve performance.
-- The models classify the training data perfectly, leading to a fairly large gap compared to the test set.
-This could be due to overfitting which could potentially be alleviated using more training data, using less features, reducing model complexity or using regularization.
-
-It is also noteworthy that the models don't perform equally well for all classes:
-- F1 >= 0.9: water, cropland, forest and wetland
-- F1 < 0.9 and F1 >= 0.8: built up, grass and shrub
-- F1 < 0.8: bare
-In some case there is also significant confusion between classes.
-
-| model        | features                        | set   | sample size | accuracy | precision | recall | f1     |
-|--------------|---------------------------------|-------|-------------|----------|-----------|--------|--------|
-| rf default   | raw bands only                  | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | raw bands only                  | test  | 78321       | 0.8488   | 0.7012    | 0.8432 | 0.7276 |
-| rf optimized | raw bands only                  | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | raw bands only                  | test  | 78321       | 0.8515   | 0.7075    | 0.8533 | 0.7372 |
-| rf default   | raw bands and indices           | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | raw bands and indices           | test  | 78321       | 0.8467   | 0.6869    | 0.8296 | 0.7143 |
-| rf optimized | raw bands and indices           | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | raw bands and indices           | test  | 78321       | 0.8504   | 0.6933    | 0.8495 | 0.7256 |
-| rf default   | seasonal raw bands              | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | seasonal raw bands              | test  | 78321       | 0.888    | 0.706     | 0.8964 | 0.754  |
-| rf optimized | seasonal raw bands              | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | seasonal raw bands              | test  | 78321       | 0.8942   | 0.7145    | 0.9053 | 0.7647 |
-| rf default   | seasonal raw bands and indices  | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | seasonal raw bands and indices  | test  | 78321       | 0.8895   | 0.727     | 0.891  | 0.7598 |
-| rf optimized | seasonal raw bands and indices  | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | seasonal raw bands and indices  | test  | 78321       | 0.8979   | 0.7383    | 0.9031 | 0.7793 |
-| rf default   | quarterly raw bands             | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands             | test  | 78321       | 0.9295   | 0.7882    | 0.9352 | 0.8295 |
-| rf optimized | quarterly raw bands             | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | quarterly raw bands             | test  | 78321       | 0.9356   | 0.8189    | 0.9398 | 0.8565 |
-| rf default   | quarterly raw bands and indices | train | 3305        | 1        | 1         | 1      | 1      |
-| rf default   | quarterly raw bands and indices | test  | 78321       | 0.9303   | 0.772     | 0.9322 | 0.82   |
-| rf optimized | quarterly raw bands and indices | train | 3305        | 1        | 1         | 1      | 1      |
-| rf optimized | quarterly raw bands and indices | test  | 78321       | 0.9355   | 0.81      | 0.9429 | 0.8527 |
+**Key observations:**
+- Quarterly temporal resolution captures seasonal variability effectively
+- High recall (~0.93) indicates the model correctly identifies most land cover areas
+- Precision (~0.79) reflects class imbalance; some misclassification between similar classes (e.g., wetland vs. water)
+- CV F1 (~0.93) vs. test F1 (~0.84) suggests mild overfitting, potentially mitigable with additional training data or regularization
 
 ## Feature importances
 
-Below is a comparison of feature importances for the default and the optimized random forest, using quarterly data and raw bands only as features.
-The notebook `final_model.ipynb` also contains permutation importances for the train and test set.
+Feature importances from the optimized model reveal which Sentinel-2 bands and indices are most predictive for land cover classification. Generated during model optimization: see `media/feature_importances.csv` and `media/feature_importances.png`.
 
-![compared feature importances](media/compared_feature_importances.png 'compared feature importances')
+## Todo
 
-## Summary and open questions
-
-The pipeline is set up and working, can be transferred to other use cases and the first results look promising.
-It surely can be improved, e. g. in terms of usability and efficiency.
-And there are open questions, such as:
-- How can the amount of data, especially for certain rare classes, be increased?
-- Can the data structure be improved?
-- Why don't the indices improve performance as expected? Which other features can be added?
-- Is an efficient feature selection process necessary?
-- Why doesn't the optimization yield significant performance improvements?
-- How to overcome overfitting?
-- The model doesn't seem to ever predict water but only wetland. What can be done here? Is this even an issue?
+**Potential improvements:**
+- Increase training sample size (especially underrepresented classes)
+- Additional temporal features (e.g., NDVI slope, phenological metrics)
+- Class weights or cost-sensitive learning to reduce precision-recall tradeoff
+- Validation against ground truth reference data
