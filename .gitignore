@@ -1,2 +1,4 @@
+.ipyncheckpoints/
+__pycache__/
 data/*
 models/*

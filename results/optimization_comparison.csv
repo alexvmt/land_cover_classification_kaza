@@ -1,0 +1,3 @@
+Model,F1_CV_Mean,F1_Test,Accuracy_Test,Precision_Test,Recall_Test,Selected_Features_Count,Hyperparams_JSON
+Default,0.929657117919373,0.8379681857045298,0.9325102460324554,0.7892666655517312,0.9306610045722712,60,{}
+Optimized,0.9241846678729797,0.8401644167439047,0.9312590171469428,0.791794632134238,0.9291876192826408,60,"{""n_estimators"": ""319"", ""max_depth"": ""47"", ""min_samples_split"": ""3"", ""min_samples_leaf"": ""2"", ""max_features"": ""log2"", ""random_state"": ""42"", ""n_jobs"": ""-1""}"
