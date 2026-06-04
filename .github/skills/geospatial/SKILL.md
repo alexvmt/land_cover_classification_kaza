@@ -1,64 +1,50 @@
 ---
-name: geospatial-workflow
-description: Geospatial processing and remote sensing workflows for Sentinel-2 land cover classification.
+name: geospatial
+description: Geospatial processing and remote sensing workflows.
 ---
 
 # When To Use
 
 Use this skill when:
-- working with CRS transformations
-- implementing raster preprocessing
-- implementing feature engineering
-- handling geospatial datasets
+
+- processing raster data
+- handling CRS transformations
 - creating remote sensing features
-
-# When Not To Use
-
-Do not use this skill for:
-- Optuna optimization logic
-- Earth Engine export debugging
-- generic Python refactoring
+- implementing spatial validation
 
 # Highest Priority Constraints
 
 - Preserve CRS consistency.
-- Preserve raster alignment and resolution.
-- Handle no-data values explicitly.
-- Keep preprocessing deterministic.
+- Preserve raster alignment.
+- Handle no-data explicitly.
 
-# Core Rules
-
-- Use EPSG:4326 unless another CRS is explicitly required.
-- Ensure all geometries share the same CRS before spatial operations.
-- Preserve CRS metadata during transformations.
-- Prefer vectorized geospatial operations.
-- Avoid pixel-wise Python loops.
-
-# Canonical Feature Strategy
+# Default Feature Strategy
 
 Use:
-- Sentinel-2 raw bands
-- vegetation indices
-- water indices
-- quarterly temporal aggregation
-- temporal medians
 
-# Common Indices
-
+- Sentinel-2 bands
 - NDVI
 - NDWI
 - EVI
-- SAVI
+- quarterly temporal aggregation
+- temporal medians
+
+# Core Rules
+
+- Use EPSG:4326 unless another CRS is required.
+- Preserve CRS metadata.
+- Avoid pixel-wise Python loops.
+- Prefer vectorized operations.
 
 # Evaluation Rules
 
 - Report macro F1.
-- Evaluate minority land cover classes explicitly.
 - Inspect per-class metrics.
+- Evaluate minority classes explicitly.
 
 # Anti-Patterns
 
-- Do not mix incompatible spatial resolutions.
-- Do not rely on implicit CRS assumptions.
-- Do not ignore cloud contamination.
-- Do not change feature schemas between experiments.
+- mixed CRS
+- mixed spatial resolutions
+- implicit no-data handling
+- changing feature schemas

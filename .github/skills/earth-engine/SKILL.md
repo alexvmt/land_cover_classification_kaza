@@ -1,30 +1,24 @@
 ---
-name: earth-engine-workflow
-description: Earth Engine feature extraction and inference workflows for Sentinel-2 land cover classification.
+name: earth-engine
+description: Earth Engine feature extraction, aggregation, export, and inference workflows.
 ---
 
 # When To Use
 
 Use this skill when:
+
 - modifying Earth Engine workflows
-- implementing Sentinel-2 feature extraction
+- implementing feature extraction
+- implementing cloud masking
 - implementing temporal aggregation
-- debugging Earth Engine inference mismatches
-- exporting models to Earth Engine-compatible formats
-
-# When Not To Use
-
-Do not use this skill for:
-- generic Python refactoring
-- local-only sklearn experimentation
-- visualization-only tasks
+- debugging inference mismatches
+- exporting models to Earth Engine
 
 # Highest Priority Constraints
 
-- Preserve exact feature names.
-- Preserve exact feature ordering.
-- Maintain Earth Engine inference compatibility.
-- Keep computations server-side whenever possible.
+- Preserve feature ordering.
+- Preserve feature names.
+- Preserve Earth Engine compatibility.
 
 # Canonical Workflow
 
@@ -32,44 +26,32 @@ Sentinel-2 ImageCollection
 → cloud masking
 → quarterly median aggregation
 → feature extraction
-→ local scikit-learn training
-→ Earth Engine-compatible export
+→ local training
+→ export
 → Earth Engine inference
 
-# Default Temporal Strategy
+# Default Strategy
 
-Use quarterly median composites unless explicitly experimenting with another strategy.
+Use quarterly median composites.
 
 # Core Rules
 
+- Keep computations server-side.
 - Minimize `.getInfo()` usage.
+- Keep schemas stable.
 - Keep temporal aggregation deterministic.
-- Keep feature schemas stable across experiments.
-- Ensure Earth Engine band names exactly match training features.
 
-# Preferred Models
+# Anti-Patterns
 
-Preferred estimators:
-- RandomForestClassifier
-- CART-style tree models
-
-Avoid:
-- unsupported neural network architectures
-- preprocessing unavailable in Earth Engine
-- dynamically changing feature schemas
-
-# Common Failure Sources
-
-- mismatched feature ordering
 - renamed features
-- inconsistent masking
-- missing bands
-- inconsistent temporal aggregation
+- dynamic schemas
+- excessive `.getInfo()`
+- preprocessing unavailable in Earth Engine
 
 # Debugging Workflow
 
-1. Verify feature ordering.
-2. Verify feature names.
+1. Verify feature names.
+2. Verify feature ordering.
 3. Verify masking logic.
-4. Verify temporal aggregation.
-5. Compare intermediate feature values.
+4. Verify aggregation logic.
+5. Compare feature values.
